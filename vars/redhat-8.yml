@@ -1,0 +1,4 @@
+---
+rclone_selinux_packages:
+  - python3-libselinux
+  - python3-policycoreutils

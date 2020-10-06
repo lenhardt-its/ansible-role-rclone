@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+{% if rclone_connections -%}
+{% for (remote, options) in rclone_connections.items() %}
+[{{ remote }}]
+{% for (key, value) in options.items() %}
+{{ key }} = {{ value }}
+{% endfor %}
+
+{% endfor %}
+{% endif %}

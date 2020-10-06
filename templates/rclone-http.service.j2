@@ -1,0 +1,17 @@
+[Unit]
+Description=rClone Crypt for Google Drive HTTP
+Documentation=http://rclone.org/docs
+After=network-online.target rclone-crypt.service
+
+[Service]
+Type=simple
+User={{ rclone_system_user }}
+Group={{ rclone_system_group }}
+ExecStart={{ rclone_binary_install_dir }}/rclone serve http gdrive-crypt: --config "{{ rclone_config_dir }}/{{ rclone_config_file }}" {% if rclone_http_user | length > 0 %}--user "{{ rclone_http_user }}"{% endif %} {% if rclone_http_pass | length > 0 %}--pass "{{ rclone_http_pass }}"{% endif %} --cache-db-path "{{ rclone_config_dir }}/rclone-http.cache" --addr {{ rclone_http_adress }} {{ rclone_http_params }}
+Restart=on-abort
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target

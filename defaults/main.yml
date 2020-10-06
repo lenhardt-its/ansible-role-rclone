@@ -1,0 +1,34 @@
+---
+proxy_env: {}
+rclone_version: 1.52.3
+rclone_listen_port: 3030
+rclone_config_dir: /etc/rclone
+rclone_config_file: config.conf
+rclone_mountfolder: /mnt/google
+rclone_cryptfolder: /mnt/google/media
+rclone_binary_install_dir: /usr/local/bin
+rclone_system_user: "rclone"
+rclone_system_group: "rclone"
+rclone_firewalld_state: "disabled" # enabled/disabled
+rclone_http_service_enable: true
+rclone_http_user: ""
+rclone_http_pass: ""
+rclone_http_adress: "127.0.0.1:{{ rclone_listen_port }}"
+rclone_http_params: "--read-only --bwlimit 20M --dir-cache-time 60m --vfs-cache-max-age 3h --vfs-cache-mode minimal --exclude backup/** --vfs-cache-poll-interval 30m"
+rclone_startparams: "--allow-other --allow-non-empty --no-modtime --dir-cache-time 24h --poll-interval 15s --buffer-size 24M --vfs-cache-mode writes -v"
+rclone_connections:
+  gdrive:
+    type: drive
+    client_id: "google_api_id"
+    client_secret: "google_secret_pass"
+    scope: drive
+    use_trash: false
+    skip_gdocs: true
+    token: "your api token"
+  gdrive-crypt:
+    type: crypt
+    remote: "gdrive:<cryptfolder>"
+    filename_encryption: standard
+    directory_name_encryption: "true"
+    password: "first_encryption_password"
+    password2: "second_encryption_password"
