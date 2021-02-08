@@ -160,7 +160,7 @@
       owner: root
       group: root
     notify:
-    - restart rclone-crypt
+    - restart rclone-mount
     - restart rclone-http
     when: not ansible_check_mode
     become: true
@@ -176,19 +176,19 @@
     mode: "0640"
     force: no
   notify:
-    - restart rclone-crypt
+    - restart rclone-mount
     - restart rclone-http
   tags: rclone
   become: true
 
 - name: copy crypt service systemd unit
   template:
-    src: "rclone-crypt.service.j2"
-    dest: "/etc/systemd/system/rclone-crypt.service"
+    src: "rclone-mount.service.j2"
+    dest: "/etc/systemd/system/rclone-mount.service"
     owner: root
     group: root
     mode: "0640"
-  notify: restart rclone-crypt
+  notify: restart rclone-mount
   tags: rclone
   become: true
 
@@ -246,7 +246,7 @@
     state: started
     enabled: yes
   with_items:
-    - rclone-crypt
+    - rclone-mount
     - rclone-http
   tags: rclone
   become: true

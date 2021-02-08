@@ -16,6 +16,7 @@ rclone_http_pass: ""
 rclone_http_adress: "127.0.0.1:{{ rclone_listen_port }}"
 rclone_http_params: "--read-only --bwlimit 20M --dir-cache-time 60m --vfs-cache-max-age 3h --vfs-cache-mode minimal --exclude backup/** --vfs-cache-poll-interval 30m"
 rclone_startparams: "--allow-other --allow-non-empty --no-modtime --dir-cache-time 24h --poll-interval 15s --buffer-size 24M --vfs-cache-mode writes -v"
+rclone_unit_mount_connection: gdrive-crypt
 rclone_connections:
   gdrive:
     type: drive

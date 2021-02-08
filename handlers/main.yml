@@ -1,8 +1,8 @@
 ---
-- name: restart rclone-crypt
+- name: restart rclone-mount
   systemd:
     daemon_reload: true
-    name: rclone-crypt
+    name: rclone-mount
     state: restarted
   tags: rclone
   become: true
