@@ -1,6 +1,6 @@
 ---
 proxy_env: {}
-rclone_version: 1.52.3
+rclone_version: 1.54.0
 rclone_listen_port: 3030
 rclone_config_dir: /etc/rclone
 rclone_config_file: config.conf

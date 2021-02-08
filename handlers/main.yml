@@ -2,7 +2,7 @@
 - name: restart rclone-crypt
   systemd:
     daemon_reload: true
-    name: "{{ item }}"
+    name: rclone-crypt
     state: restarted
   tags: rclone
   become: true
@@ -10,7 +10,7 @@
 - name: restart rclone-http
   systemd:
     daemon_reload: true
-    name: "{{ item }}"
+    name: rclone-http
     state: restarted
   tags: rclone
   become: true

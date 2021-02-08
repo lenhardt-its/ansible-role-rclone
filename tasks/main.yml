@@ -25,9 +25,9 @@
     regexp: '{{ item.key }}'
     replace: '{{ item.value }}'
   with_items:
-    - key: '# mount_max = 1000'
+    - key: '#mount_max = 1000'
       value: 'mount_max = 1000'
-    - key: '# user_allow_other'
+    - key: '#user_allow_other'
       value: 'user_allow_other'
   tags: rclone
   become: true
@@ -44,11 +44,11 @@
 - name: create system user
   user:
     name: "{{ rclone_system_user }}"
-    system: true
-    shell: "/sbin/nologin"
+    #system: true
+    #shell: "/sbin/nologin"
     group: "{{ rclone_system_group }}"
-    createhome: false
-    home: /
+    #createhome: false
+    #home: /
   when: rclone_system_user != "root"
   become: true
   tags: rclone
@@ -199,7 +199,8 @@
     owner: root
     group: root
     mode: "0640"
-  notify: restart rclone-http
+  notify:
+    - restart rclone-http    
   when: rclone_http_service_enable
   tags: rclone
   become: true
@@ -211,6 +212,7 @@
     setype: http_port_t
     state: present
   when:
+    - ansible_os_family == 'RedHat'
     - ansible_version.full is version_compare('2.4', '>=')
     - ansible_selinux.status == "enabled"
   become: true
@@ -221,7 +223,9 @@
     port: "{{ rclone_listen_port }}/tcp"
     permanent: yes
     state: true
-  when: rclone_firewalld_state == "enabled"
+  when: 
+    - ansible_os_family == 'RedHat'
+    - rclone_firewalld_state == "enabled"
   register: "_firewalld_rclone_state"
   become: true
   tags: rclone
@@ -230,7 +234,9 @@
   service:
     name: firewalld
     state: reloaded
-  when: _firewalld_rclone_state['changed']
+  when:
+    - ansible_os_family == 'RedHat'
+    - _firewalld_rclone_state['changed']
   become: true
   tags: rclone
 
