@@ -19,21 +19,7 @@
   become: true
   tags: rclone
 
-- name: configure /etc/fuse.conf on rhel
-  replace:
-    path: /etc/fuse.conf
-    regexp: '{{ item.key }}'
-    replace: '{{ item.value }}'
-  with_items:
-    - key: '# mount_max = 1000'
-      value: 'mount_max = 1000'
-    - key: '# user_allow_other'
-      value: 'user_allow_other'
-  tags: rclone
-  when: ansible_os_family == "RedHat"
-  become: true
-
-- name: configure /etc/fuse.conf on debian
+- name: configure /etc/fuse.conf
   replace:
     path: /etc/fuse.conf
     regexp: '{{ item.key }}'
@@ -44,7 +30,6 @@
     - key: '#user_allow_other'
       value: 'user_allow_other'
   tags: rclone
-  when: ansible_os_family == "Debian"
   become: true
 
 - name: create system group
@@ -59,10 +44,11 @@
 - name: create system user
   user:
     name: "{{ rclone_system_user }}"
-    system: true
-    shell: "/sbin/nologin"
+    #system: true
+    #shell: "/sbin/nologin"
     group: "{{ rclone_system_group }}"
-    createhome: false
+    #createhome: false
+    #home: /
   when: rclone_system_user != "root"
   become: true
   tags: rclone
@@ -213,8 +199,7 @@
     owner: root
     group: root
     mode: "0640"
-  notify:
-    - restart rclone-http    
+  notify: restart rclone-http
   when: rclone_http_service_enable
   tags: rclone
   become: true
