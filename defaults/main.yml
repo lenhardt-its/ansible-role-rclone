@@ -1,6 +1,6 @@
 ---
 proxy_env: {}
-rclone_version: 1.54.0
+rclone_version: 1.55.1
 rclone_listen_port: 3030
 rclone_config_dir: /etc/rclone
 rclone_config_file: config.conf
@@ -9,7 +9,6 @@ rclone_cryptfolder: /mnt/google/media
 rclone_binary_install_dir: /usr/local/bin
 rclone_system_user: "rclone"
 rclone_system_group: "rclone"
-rclone_firewalld_state: "disabled" # enabled/disabled
 rclone_http_service_enable: true
 rclone_http_user: ""
 rclone_http_pass: ""

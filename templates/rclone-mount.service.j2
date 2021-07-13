@@ -7,7 +7,7 @@ After=network-online.target
 Type=idle
 User={{ rclone_system_user }}
 Group={{ rclone_system_group }}
-ExecStart={{ rclone_binary_install_dir }}/rclone mount gdrive-crypt: {{ rclone_cryptfolder }} --config {{ rclone_config_dir }}/{{ rclone_config_file }} {{ rclone_startparams }}
+ExecStart={{ rclone_binary_install_dir }}/rclone mount {{ rclone_unit_mount_connection }}: {{ rclone_cryptfolder }} --config {{ rclone_config_dir }}/{{ rclone_config_file }} {{ rclone_startparams }}
 ExecStop=/bin/fusermount -u -z {{ rclone_cryptfolder }}
 Restart=always
 
